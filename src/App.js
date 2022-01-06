@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 
 const api = {
-  key: "H1lfELGGDnw6Ic3VygOva2QVV5ThsAPU",
+  key: "zGNyluGwmA7DxMFcktUfmYKzusXR3kWZ",
   base: "http://dataservice.accuweather.com/locations/v1/cities/search",
   base2: "http://dataservice.accuweather.com/forecasts/v1/daily/1day"
 }
@@ -10,8 +10,8 @@ const api = {
 function App() {
   
   const [query,setQuery] = useState('');
-  const [weather,setWeather] = useState({});
-
+  const [city,setCity] = useState({Country: {EnglishName: ''}});
+  const [weather,setWeather] = useState({Headline:{Category:''},DailyForecasts:[{Temperature:{Minimum:{Value:''}, Maximum:{Value:''}} }]});
   const search = evt => {
     if(evt.key == 'Enter')
     {
@@ -19,14 +19,16 @@ function App() {
       .then(res => res.json())
       .then(result => 
         {
-          setWeather(result[0].Key)
+          setCity(result[0])
           setQuery('');
-          console.log(result[0].Key);
+          console.log(result[0].Country.EnglishName);
           var key = result[0].Key;
           fetch(`${api.base2}/${key}?apikey=${api.key}`)
           .then(res => res.json())
           .then(result => {
-            console.log(result)
+            console.log(result.Headline.Category);
+            console.log(result.DailyForecasts[0].Temperature.Minimum.Value);
+            setWeather(result)
           })
         });
     }
@@ -58,20 +60,25 @@ function App() {
             onKeyPress={search}
           />
         </div>
+        {(typeof city.Key != "undefined") ? (
         <div>
           <div className="location-box">
             <div className="location">
-              New York City, US
+              {city.EnglishName}, {city.Country.EnglishName}
               <div className="date">{dateBuilder(new Date())}</div>
               <div className="weather-box">
                 <div className="temp">
-                  15*C
+                  Min {Math.round(weather.DailyForecasts[0].Temperature.Minimum.Value)}°F
+                  Max {Math.round(weather.DailyForecasts[0].Temperature.Maximum.Value)}°F
                 </div>
-                <div className="status">Sunny</div>
+              <div className="status">
+              {weather.Headline.Category}
               </div>
             </div>
           </div>
         </div>
+          </div>
+          ) : ('')}
       </main>
     </div>
   );
