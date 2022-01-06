@@ -1,23 +1,24 @@
-import logo from './logo.svg';
+import React, {userState} from 'react';
 import './App.css';
 
+const api = {
+  key: "H1lfELGGDnw6Ic3VygOva2QVV5ThsAPU",
+  base: "http://dataservice.accuweather.com/locations/v1/cities/search"
+}
+
 function App() {
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="weather">
+      <main>
+        <div className="search">
+          <input 
+            type="text"
+            className="search-bar"
+            placeholder="Enter City Name"
+          />
+        </div>
+      </main>
     </div>
   );
 }
