@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 
 const api = {
-  key: "zGNyluGwmA7DxMFcktUfmYKzusXR3kWZ",
+  key: "vRnTbCVZatMVbbxXqyp4Ij8CippRRkbw",
   base: "http://dataservice.accuweather.com/locations/v1/cities/search",
   base2: "http://dataservice.accuweather.com/forecasts/v1/daily/1day"
 }
@@ -11,9 +11,9 @@ function App() {
   
   const [query,setQuery] = useState('');
   const [city,setCity] = useState({Country: {EnglishName: ''}});
-  const [weather,setWeather] = useState({Headline:{Category:''},DailyForecasts:[{Temperature:{Minimum:{Value:''}, Maximum:{Value:''}} }]});
+  const [weather,setWeather] = useState({Headline:{Category:'' , Text: ''},DailyForecasts:[{Temperature:{Minimum:{Value:''}, Maximum:{Value:''}} }]});
   const search = evt => {
-    if(evt.key == 'Enter')
+    if(evt.key === 'Enter')
     {
       fetch(`${api.base}?apikey=${api.key}&q=${query}`)
       .then(res => res.json())
@@ -48,7 +48,7 @@ function App() {
   }
 
   return (
-    <div className="weather">
+    <div className={(typeof city!="undefined") ? ((weather.DailyForecasts[0].Temperature.Minimum.Value < 16) ? 'weather-night' : 'weather') : 'weather'}>
       <main>
         <div className="search">
           <input 
@@ -60,7 +60,7 @@ function App() {
             onKeyPress={search}
           />
         </div>
-        {(typeof city.Key != "undefined") ? (
+        {(typeof city != "undefined") ? (
         <div>
           <div className="location-box">
             <div className="location">
@@ -72,13 +72,23 @@ function App() {
                   Max {Math.round(weather.DailyForecasts[0].Temperature.Maximum.Value)}°F
                 </div>
               <div className="status">
-              {weather.Headline.Category}
+              {weather.Headline.Category}, 
+              {weather.Headline.Text}
               </div>
             </div>
           </div>
         </div>
           </div>
-          ) : ('')}
+          ) : (
+          <div>
+          <div className="location-box">
+            <div className="location">
+              Invalid City Input :)
+              <div className="date">{dateBuilder(new Date())}</div>
+          </div>
+        </div>
+          </div>
+          )}
       </main>
     </div>
   );

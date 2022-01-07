@@ -12,11 +12,14 @@ body {
   background-image: url('./assets/after_noon.png');
   background-size: cover;
   background-position: bottom;
-  transition: 0.4 ease-out;
+  transition: 0.4s ease-out;
 }
 
 .weather-night {
   background-image: url('./assets/night.png');
+  background-size: cover;
+  background-position: bottom;
+  transition: 0.4s ease;
 }
 
 main {
@@ -48,7 +51,7 @@ main {
   color: #31313131;
   font-size: 20px;
 
-  transition: 0.4 ease-out;
+  transition: 0.4s ease;
 }
 
 .search .search-bar:focus {
