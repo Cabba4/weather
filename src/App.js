@@ -3,8 +3,8 @@ import './App.css';
 
 const api = {
   key: "vRnTbCVZatMVbbxXqyp4Ij8CippRRkbw",
-  base: "http://dataservice.accuweather.com/locations/v1/cities/search",
-  base2: "http://dataservice.accuweather.com/forecasts/v1/daily/1day"
+  base: "https://dataservice.accuweather.com/locations/v1/cities/search",
+  base2: "https://dataservice.accuweather.com/forecasts/v1/daily/1day"
 }
 
 function App() {
